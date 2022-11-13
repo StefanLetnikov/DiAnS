@@ -1,0 +1,3 @@
+osmfilter Raw_downloaded_data/map.osm --keep="shop=computer" | osmconvert64-0.8.8p - --all-to-nodes --csv="name addr:city addr:street  @lat @lon" --csv-headline --csv-separator="," -o="Filtered_tables/anhoch.csv"
+osmfilter Raw_downloaded_data/map.osm --keep="name=*etec* or name=*ETEC*" | osmconvert64-0.8.8p - --all-to-nodes --csv="name addr:city addr:street  @lat @lon" --csv-headline --csv-separator="," -o="Filtered_tables/setec.csv"
+osmfilter Raw_downloaded_data/map.osm --keep="name=*eptun* or name=*EPTUN*" | osmconvert64-0.8.8p - --all-to-nodes --csv="name addr:city addr:street @lat @lon" --csv-headline --csv-separator="," -o="Filtered_tables/neptun.csv"
