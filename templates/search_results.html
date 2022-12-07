@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="container bg-light">
+    <div class="row">
+        <div class="col">
+            <h1>Test</h1>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="row">
+                    <div class="col-5">
+                        <form action="{% url 'search_results' %}" method="get" id="search_form">
+                            <input name="q" type="text" placeholder="Search...">
+                        </form>
+                    </div>
+                    <div class="col-2">
+                        <button form="search_form" type="submit" class="btn btn-success btn-sm"
+                                style="margin-left: 10px">Search
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="row-4">
+
+                        <ul>
+                            {% for product in object_list %}
+                                <li id="list_options">
+                                    {{ product.product }}
+                                    <ul>
+                                        <li>
+                                            {{ product.shop }}, {{ product.shop.shop_Address }}
+                                        </li>
+                                        <div id="longitude"
+                                             style="display: none">{{ product.shop.shop_Longitude }}</div>
+                                        <div id="latitude" style="display: none">{{ product.shop.shop_Latitude }}</div>
+                                        <div id="shop_name" style="display: none">{{ product.shop.shop_Name }}</div>
+                                        <div id="shop_address" style="display: none">{{ product.shop.shop_Address }}</div>
+                                    </ul>
+
+                                </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="rounded" id="map" style="width: 750px; height: 440px"></div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script>
+    // Creating map options
+    //41.99594, 21.43147
+    var longitude = "21.43147";
+    var latitude = "41.99594";
+    var map;
+
+    var mapOptions = {
+        center: [latitude, longitude],
+        zoom: 14
+    }
+
+    // Creating a map object
+    var map = new L.map('map', mapOptions);
+
+    //var marker = L.marker([41.9945784, 21.4338471]).addTo(map);
+    //marker.bindPopup("<b>Anhoch Market</b><br>GTC.").openPopup();
+    // Creating a Layer object
+    var layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+    // Adding layer to the map
+    map.addLayer(layer);
+
+
+    window.onclick = e => {
+        //console.log(e.target);  // to get the element
+        var collection = e.target;
+        var value = collection.children;
+        //console.log(value)
+        longitude = value[0].children[1].innerText
+        //console.log(longitude)
+        latitude = value[0].children[2].innerText
+        var shop_name = value[0].children[3].innerText
+        var shop_address = value[0].children[4].innerText
+
+
+        mapOptions = {
+            center: [latitude, longitude],
+            zoom: 16
+        }
+        map.off();
+        map.remove();
+         //Creating a map object
+        map = new L.map('map', mapOptions);
+
+        marker = L.marker([longitude, latitude]).addTo(map);
+        markerInfo = shop_name + '\n ' + shop_address;
+        marker.bindPopup(markerInfo).openPopup();
+        // Creating a Layer object
+        layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+
+        // Adding layer to the map
+        map.addLayer(layer);
+
+        //console.log(latitude)
+    }
+
+
+</script>
+</body>
+</html>
