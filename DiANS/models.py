@@ -16,7 +16,7 @@ class Product(models.Model):
     #product_CoverImage = models.ImageField(upload_to="cover_images/", null=True, blank=True)
 
     def __str__(self):
-        return self.product_Name + " " + self.product_Price
+        return self.product_Name + " " + self.product_Price + "$"
 
 
 
@@ -30,7 +30,7 @@ class Shop(models.Model):
     #user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.shop_City + "/" + self.shop_Name
+        return self.shop_Name + " / " + self.shop_City + " - " + self.shop_Address
 
 class ManufacturerProduct(models.Model):
     manufacturer = models.ForeignKey(Manufacturer,on_delete=models.CASCADE)
