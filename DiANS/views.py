@@ -14,12 +14,12 @@ from DiANS.models import *
 #     context = {"products": queryset}
 #     return render(request, "index.html", context=context)
 
-class HomePageView(TemplateView):
-    template_name = 'index.html'
+# class HomePageView(TemplateView):
+#     template_name = 'index.html'
 
 class SearchResultsView(ListView):
     model = Product
-    template_name = 'search_results.html'
+    template_name = 'index.html'
 
     def get_queryset(self):
         query = self.request.GET.get("q")

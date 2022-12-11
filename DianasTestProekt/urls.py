@@ -21,6 +21,6 @@ from DiANS.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     #path('index/', index, name="index"),
-    path("search/", SearchResultsView.as_view(), name="search_results"),
-    path("", HomePageView.as_view(), name="home"),
+    #path("search/", SearchResultsView.as_view(), name="search_results"),
+    path("", SearchResultsView.as_view(), name="index"),
 ]
