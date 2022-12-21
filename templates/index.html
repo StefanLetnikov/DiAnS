@@ -49,7 +49,8 @@
                                              style="display: none">{{ product.shop.shop_Longitude }}</div>
                                         <div id="latitude" style="display: none">{{ product.shop.shop_Latitude }}</div>
                                         <div id="shop_name" style="display: none">{{ product.shop.shop_Name }}</div>
-                                        <div id="shop_address" style="display: none">{{ product.shop.shop_Address }}</div>
+                                        <div id="shop_address"
+                                             style="display: none">{{ product.shop.shop_Address }}</div>
                                     </ul>
 
                                 </li>
@@ -63,12 +64,42 @@
                 <div class="rounded" id="map" style="width: 750px; height: 440px"></div>
             </div>
         </div>
-
+        <p id="userLat" style="display:none"></p>
+        <p id="userLong" style="display:none"></p>
 
     </div>
 </div>
-<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+<script type="text/javascript" src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+{#<script type = "text/javascript" src = "scipts.js"></script>#}
+
 <script>
+
+    ///////////////////////////////////////////////
+    var lat;
+    var lng;
+
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            lat = position.coords.latitude;
+            lng = position.coords.longitude;
+            {#console.log(lat)#}
+            {#console.log(lng)#}
+            document.getElementById("userLat").innerHTML = lat;
+            document.getElementById("userLong").innerHTML = lng;
+
+        },
+        function (error) {
+            console.log(error.message);
+        }
+    );
+
+    lat = document.getElementById("userLat").innerHTML;
+    lng = document.getElementById("userLong").innerHTML;
+
+
+    ///////////////////////////////////////////////
+
+
     // Creating map options
     //41.99594, 21.43147
     var longitude = "21.43147";
@@ -79,6 +110,7 @@
         center: [latitude, longitude],
         zoom: 14
     }
+
 
     // Creating a map object
     var map = new L.map('map', mapOptions);
@@ -105,18 +137,19 @@
 
 
         mapOptions = {
-            center: [latitude, longitude],
+            center: [longitude, latitude],
             zoom: 16
         }
         //destroying the old map object
         map.off();
         map.remove();
-         //Creating a map object
+        //Creating a map object
         map = new L.map('map', mapOptions);
 
         marker = L.marker([longitude, latitude]).addTo(map);
         markerInfo = shop_name + '\n ' + shop_address;
         marker.bindPopup(markerInfo).openPopup();
+
         // Creating a Layer object
         layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
 
@@ -124,6 +157,7 @@
         map.addLayer(layer);
 
         //console.log(latitude)
+
     }
 
 
