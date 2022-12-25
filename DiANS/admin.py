@@ -78,3 +78,5 @@ class ShopProductInLine(admin.ModelAdmin):
     inlines = [ShopProductAdmin,ManufacturerProductAdmin]
 
 admin.site.register(Product, ShopProductInLine)
+
+

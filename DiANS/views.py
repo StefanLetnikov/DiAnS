@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from itertools import chain
 
@@ -16,6 +17,7 @@ from DiANS.models import *
 
 # class HomePageView(TemplateView):
 #     template_name = 'index.html'
+
 
 class SearchResultsView(ListView):
     model = Product
